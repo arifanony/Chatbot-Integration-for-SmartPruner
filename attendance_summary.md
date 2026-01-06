@@ -1,6 +1,4 @@
 
----
-
 # Supported Chatbot Questions (AttendanceSummary)
 
 ---
@@ -12,15 +10,15 @@
 ```sql
 SELECT PresentDays, AbsentDays, LeaveDays, LateCount, OvertimeHours
 FROM dbo.AttendanceSummary
-WHERE EmployeeId = @EmployeeId
+WHERE EmployeeId = ?
   AND Year = YEAR(GETDATE())
   AND Month = MONTH(GETDATE());
-```
+````
 
 **Response Rules:**
 
 * Present {PresentDays} days, Absent {AbsentDays} days, Leave {LeaveDays} days, Late {LateCount} times, Overtime {OvertimeHours} hours.
-* If no record exists: No monthly attendance data found for employee {EmployeeId}.
+* If no record exists: No monthly attendance data found for the employee.
 
 ---
 
@@ -31,9 +29,9 @@ WHERE EmployeeId = @EmployeeId
 ```sql
 SELECT PresentDays, AbsentDays, LeaveDays, LateCount, OvertimeHours
 FROM dbo.AttendanceSummary
-WHERE EmployeeId = @EmployeeId
-  AND Year = @Year
-  AND Month = @Month;
+WHERE EmployeeId = ?
+  AND Year = ?
+  AND Month = ?;
 ```
 
 **Response Rules:**
@@ -100,6 +98,25 @@ ORDER BY PresentDays DESC;
 
 ---
 
+## Who did the most overtime this month?
+
+**Intent Key:** `attendance.summary.max.overtime.currentmonth`
+
+```sql
+SELECT TOP 1 EmployeeId, OvertimeHours
+FROM dbo.AttendanceSummary
+WHERE Year = YEAR(GETDATE())
+  AND Month = MONTH(GETDATE())
+ORDER BY OvertimeHours DESC;
+```
+
+**Response Rules:**
+
+* Employee {EmployeeId} logged the highest overtime this month with {OvertimeHours} hours.
+* If no record exists: No overtime records found for this month.
+
+---
+
 ## How many leave days did an employee take this month?
 
 **Intent Key:** `attendance.summary.employee.leave.currentmonth`
@@ -107,15 +124,15 @@ ORDER BY PresentDays DESC;
 ```sql
 SELECT LeaveDays
 FROM dbo.AttendanceSummary
-WHERE EmployeeId = @EmployeeId
+WHERE EmployeeId = ?
   AND Year = YEAR(GETDATE())
   AND Month = MONTH(GETDATE());
 ```
 
 **Response Rules:**
 
-* Employee {EmployeeId} took {LeaveDays} leave days this month.
-* If no record exists: No leave data found for employee {EmployeeId} this month.
+* Employee took {LeaveDays} leave days this month.
+* If no record exists: No leave data found for the employee this month.
 
 ---
 
@@ -126,15 +143,15 @@ WHERE EmployeeId = @EmployeeId
 ```sql
 SELECT OvertimeHours
 FROM dbo.AttendanceSummary
-WHERE EmployeeId = @EmployeeId
+WHERE EmployeeId = ?
   AND Year = YEAR(GETDATE())
   AND Month = MONTH(GETDATE());
 ```
 
 **Response Rules:**
 
-* Employee {EmployeeId} logged {OvertimeHours} overtime hours this month.
-* If no record exists: No overtime data found for employee {EmployeeId} this month.
+* Employee logged {OvertimeHours} overtime hours this month.
+* If no record exists: No overtime data found for the employee this month.
 
 ---
 
@@ -194,7 +211,7 @@ WHERE Year = YEAR(GETDATE())
 
 ---
 
-## Attendance overview for a given month (status counts)
+## Attendance overview for a given month
 
 **Intent Key:** `attendance.summary.overview.bymonth`
 
@@ -206,8 +223,8 @@ SELECT
   SUM(LateCount) AS TotalLateCount,
   SUM(OvertimeHours) AS TotalOvertimeHours
 FROM dbo.AttendanceSummary
-WHERE Year = @Year
-  AND Month = @Month;
+WHERE Year = ?
+  AND Month = ?;
 ```
 
 **Response Rules:**
@@ -215,5 +232,6 @@ WHERE Year = @Year
 * Overview for {Month}/{Year}: Present {TotalPresentDays}, Absent {TotalAbsentDays}, Leave {TotalLeaveDays}, Late {TotalLateCount}, Overtime {TotalOvertimeHours}.
 * If no record exists: No attendance data found for the selected month.
 
----
+```
+
 
