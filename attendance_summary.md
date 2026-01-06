@@ -1,4 +1,3 @@
-
 # Supported Chatbot Questions (AttendanceSummary)
 
 ---
