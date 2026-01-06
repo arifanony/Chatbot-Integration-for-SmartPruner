@@ -47,6 +47,7 @@ SELECT EmployeeId
 FROM dbo.AttendanceDaily
 WHERE AttendanceDate = CAST(GETDATE() AS DATE)
   AND Status = 'Absent';
+```
 
 **Response Template:**
 
