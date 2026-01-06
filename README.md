@@ -73,18 +73,19 @@ AI is **not** used to generate data or make assumptions.
 
 ## Repository Structure
 
-```
-
-├── app.py                # Local chatbot test runner
-├── intent.py             # Intent detection logic
-├── queries.py            # Intent-to-SQL mapping
-├── db.py                 # Database connection (read-only)
-├── docs/
-│   ├── AttendanceDaily.md
-│   ├── AttendanceSummary.md
-│   └── Design_Flow.pdf
-
-```
+Chatbot-Integration-for-SmartPruner/
+│
+├── README.md                     # HRM Chatbot integration overview & design
+├── attendance_daily.md           # Intent + SQL mapping for AttendanceDaily
+├── attendance_summary.md         # Intent + SQL mapping for AttendanceSummary
+│
+├── hrm-chatbot-test/             # Chatbot PoC / test harness
+   ├── app.py                    # Local chatbot test runner (CLI-based)
+   ├── intent.py                 # Intent detection logic
+   ├── queries.py                # Intent-to-SQL mapping registry
+   ├── db.py                     # Read-only database connection & executor
+   └── __pycache__/              # Python cache (ignored in production)
+         
 
 ---
 
