@@ -73,6 +73,7 @@ AI is **not** used to generate data or make assumptions.
 
 ## Repository Structure
 
+```text
 Chatbot-Integration-for-SmartPruner/
 │
 ├── README.md                     # HRM Chatbot integration overview & design
@@ -85,9 +86,9 @@ Chatbot-Integration-for-SmartPruner/
    ├── queries.py                # Intent-to-SQL mapping registry
    ├── db.py                     # Read-only database connection & executor
    └── __pycache__/              # Python cache (ignored in production)
-         
+ ```        
 
----
+
 
 ## Supported Features
 
